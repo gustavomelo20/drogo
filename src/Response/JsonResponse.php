@@ -4,8 +4,21 @@ namespace Drogo\Response;
 
 class JsonResponse
 {
-    public static function output(array $response)
+    private $data;
+
+    public function __construct(array $response)
     {
-        echo json_encode($response);
+        $this->data = $response;
+    }
+
+    public static function output(array $response): self
+    {
+        return new self($response);
+    }
+
+    public function send()
+    {
+        header('Content-Type: application/json');
+        echo json_encode($this->data);
     }
 }

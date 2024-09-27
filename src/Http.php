@@ -2,6 +2,9 @@
 
 namespace Drogo;
 
+use App\Http\Request;
+use Drogo\Response\JsonResponse;
+
 class Http
 {
     private static $routes = [];
@@ -54,6 +57,25 @@ class Http
     {
         list($controller, $method) = $action;
         $controllerInstance = new $controller();
-        $controllerInstance->$method(); // Chama o método do controlador
+
+        $reflectionMethod = new \ReflectionMethod($controller, $method);
+
+        if ($reflectionMethod->getNumberOfParameters() > 0) {
+            $parameter = $reflectionMethod->getParameters()[0];
+            $type = $parameter->getType();
+
+            if ($type && !$type->isBuiltin() && $type->getName() === Request::class) {
+                $request = new Request();
+                $response = $controllerInstance->$method($request);
+            } else {
+                $response = $controllerInstance->$method();
+            }
+        } else {
+            $response = $controllerInstance->$method();
+        }
+
+        if ($response instanceof JsonResponse) {
+            $response->send();
+        }
     }
 }
