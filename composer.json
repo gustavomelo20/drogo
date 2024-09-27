@@ -1,0 +1,19 @@
+{
+    "name": "drogo/api",
+    "autoload": {
+        "psr-4": {
+            "Drogo\\": "src/",
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gustavomelo20",
+            "email": "infogustavomelo@gmail.com"
+        }
+    ],
+    "require": {},
+    "scripts": {
+        "start": "php -S localhost:4157"
+    }
+}
