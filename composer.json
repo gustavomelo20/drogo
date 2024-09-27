@@ -12,7 +12,9 @@
             "email": "infogustavomelo@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "illuminate/database": "^11.25"
+    },
     "scripts": {
         "start": "php -S localhost:4157"
     }
